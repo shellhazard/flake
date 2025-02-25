@@ -10,8 +10,9 @@ in
 {
   options = {
     services.breezewiki = {
-      enable = mkEnableOption "Breezewiki";
-      config = types.submodule {
+      enable = mkEnableOption "breezewiki";
+      config = lib.mkOption {
+        type = types.submodule;
         options = {
           bind_host = mkOption {
             type = types.str;
@@ -62,7 +63,6 @@ in
     systemd.services."breezewiki" = {
       enable = true;
       description = "Breezewiki";
-      after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       environment = {
         BW_BIND_HOST = cfg.bind_host;
