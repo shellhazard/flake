@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }:
@@ -53,7 +54,7 @@ in
       };
       package = mkOption {
         type = types.package;
-        default = lib.callPackage ./breezewiki.nix;
+        default = (pkgs.callPackage ./breezewiki.nix);
         description = "Package override.";
       };
     };
