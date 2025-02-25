@@ -53,7 +53,7 @@ in
       };
       package = mkOption {
         type = types.package;
-        default = callPackage ./breezewiki.nix;
+        default = lib.callPackage ./breezewiki.nix;
         description = "Package override.";
       };
     };
