@@ -51,7 +51,7 @@ in
       };
       package = mkOption {
         type = types.package;
-        default = (lib.callPackage ./breezewiki.nix);
+        default = callPackage ./breezewiki.nix;
         description = "Package override.";
       };
     };
@@ -59,9 +59,10 @@ in
 
   config = mkIf cfg.enable {
     # Create systemd service
-    systemd.services.breezewiki = {
+    systemd.services."breezewiki" = {
       enable = true;
       description = "Breezewiki";
+      after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       environment = {
         BW_BIND_HOST = cfg.bind_host;

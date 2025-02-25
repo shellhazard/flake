@@ -12,6 +12,7 @@ stdenv.mkDerivation {
   version = "20250108172305";
 
   src = fetchurl {
+    # No versioned URL is provided, so we use the archive.org version.
     url = "https://web.archive.org/web/20250108172305/https://docs.breezewiki.com/files/breezewiki-dist.tar.gz";
     hash = "sha256-PY+h6zLkGQMcMrlcB15rbU36bm7rKAQiJza1XAxhtow=";
   };
