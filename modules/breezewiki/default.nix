@@ -1,7 +1,8 @@
 {
   lib,
+  config,
 }:
-with import <nixpkgs> { };
+with lib;
 let
   cfg = config.services.breezewiki;
 in
