@@ -60,6 +60,7 @@ in
   config = mkIf cfg.enable {
     # Create systemd service
     systemd.services.breezewiki = {
+      enable = true;
       description = "Breezewiki";
       wantedBy = [ "multi-user.target" ];
       environment = {
