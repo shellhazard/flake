@@ -77,8 +77,12 @@ in
       };
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/breezewiki";
+        WorkingDirectory = "${cfg.package}";
         ProtectHome = "read-only";
-        Restart = "on-failure";
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
         Type = "exec";
         DynamicUser = true;
       };
