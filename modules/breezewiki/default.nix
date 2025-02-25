@@ -68,12 +68,12 @@ in
       wantedBy = [ "multi-user.target" ];
       environment = {
         BW_BIND_HOST = cfg.config.bind_host;
-        BW_PORT = cfg.config.port;
+        BW_PORT = (builtins.toString cfg.config.port);
         BW_CANONICAL_ORIGIN = cfg.config.canonical_origin;
-        BW_DEBUG = cfg.config.debug;
-        BW_FEATURE_SEARCH_SUGGESTIONS = cfg.config.feature_search_suggestions;
-        BW_LOG_OUTGOING = cfg.config.log_outgoing;
-        BW_STRICT_PROXY = cfg.config.strict_proxy;
+        BW_DEBUG = (builtins.toString cfg.config.debug);
+        BW_FEATURE_SEARCH_SUGGESTIONS = (builtins.toString cfg.config.feature_search_suggestions);
+        BW_LOG_OUTGOING = (builtins.toString cfg.config.log_outgoing);
+        BW_STRICT_PROXY = (builtins.toString cfg.config.strict_proxy);
       };
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/breezewiki";
