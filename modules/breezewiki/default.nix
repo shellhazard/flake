@@ -5,15 +5,10 @@ with import <nixpkgs> { };
 let
   cfg = config.services.breezewiki;
 in
-callPackage ./breezewiki.nix {
+{
   options = {
     services.breezewiki = {
       enable = mkEnableOption "Breezewiki";
-      port = mkOption {
-        type = types.int;
-        description = "The port for the instance to bind to.";
-        default = 8080;
-      };
       config = types.submodule {
         options = {
           bind_host = mkOption {
@@ -54,7 +49,7 @@ callPackage ./breezewiki.nix {
       };
       package = mkOption {
         type = types.package;
-        default = self.packages.${pkgs.system}.default;
+        default = (lib.callPackage ./breezewiki.nix);
         description = "Package override.";
       };
     };
@@ -65,11 +60,17 @@ callPackage ./breezewiki.nix {
     systemd.services.breezewiki = {
       description = "Breezewiki";
       wantedBy = [ "multi-user.target" ];
-
+      environment = {
+        BW_BIND_HOST = cfg.bind_host;
+        BW_PORT = cfg.port;
+        BW_CANONICAL_ORIGIN = cfg.canonical_origin;
+        BW_DEBUG = cfg.debug;
+        BW_FEATURE_SEARCH_SUGGESTIONS = cfg.feature_search_suggestions;
+        BW_LOG_OUTGOING = cfg.log_outgoing;
+        BW_STRICT_PROXY = cfg.strict_proxy;
+      };
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/cmd -port ${toString cfg.port} -file ${
-          builtins.toFile "config.yml" (lib.generators.toYAML { } (configToYAML cfg))
-        }";
+        ExecStart = "${cfg.package}/bin/breezewiki";
         ProtectHome = "read-only";
         Restart = "on-failure";
         Type = "exec";

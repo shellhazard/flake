@@ -1,15 +1,8 @@
 {
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-  };
+  description = "shellhazard's Nix outputs";
 
-  outputs =
-    { self, nixpkgs }:
-    let
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
-    in
-    {
-      nixosModules.breezewiki = import ./modules/breezewiki;
-      nixosModules.neko-rooms = import ./modules/neko-rooms;
-    };
+  outputs = {
+    nixosModules.breezewiki = import ./modules/breezewiki;
+    nixosModules.neko-rooms = import ./modules/neko-rooms;
+  };
 }
