@@ -67,13 +67,13 @@ in
       description = "Breezewiki";
       wantedBy = [ "multi-user.target" ];
       environment = {
-        BW_BIND_HOST = cfg.bind_host;
-        BW_PORT = cfg.port;
-        BW_CANONICAL_ORIGIN = cfg.canonical_origin;
-        BW_DEBUG = cfg.debug;
-        BW_FEATURE_SEARCH_SUGGESTIONS = cfg.feature_search_suggestions;
-        BW_LOG_OUTGOING = cfg.log_outgoing;
-        BW_STRICT_PROXY = cfg.strict_proxy;
+        BW_BIND_HOST = cfg.config.bind_host;
+        BW_PORT = cfg.config.port;
+        BW_CANONICAL_ORIGIN = cfg.config.canonical_origin;
+        BW_DEBUG = cfg.config.debug;
+        BW_FEATURE_SEARCH_SUGGESTIONS = cfg.config.feature_search_suggestions;
+        BW_LOG_OUTGOING = cfg.config.log_outgoing;
+        BW_STRICT_PROXY = cfg.config.strict_proxy;
       };
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/breezewiki";
