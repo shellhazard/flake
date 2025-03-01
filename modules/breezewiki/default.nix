@@ -65,7 +65,7 @@ in
     system.activationScripts.breezewikiDir.text = ''
       mkdir -p /opt/breezewiki/bin
       ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
-      ln -sf ${cfg.package}/lib /opt/breezewiki/lib
+      ln -sf ${cfg.package}/lib/* /opt/breezewiki/lib
     '';
 
     systemd.services."breezewiki" = {
@@ -96,7 +96,4 @@ in
       };
     };
   };
-
-  # TODO: Apply config options through environment variables
-  # TODO: Create systemd service
 }
