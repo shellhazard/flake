@@ -12,7 +12,11 @@ in
   options = {
     services.breezewiki = {
       enable = mkEnableOption "breezewiki";
-      config = lib.mkOption {
+      storagePath = mkOption {
+        type = types.path;
+
+      };
+      config = mkOption {
         type = types.submodule {
           options = {
             bind_host = mkOption {
@@ -77,7 +81,7 @@ in
       };
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/breezewiki";
-        WorkingDirectory = "${cfg.package}";
+        WorkingDirectory = "/opt/breezewiki/bin";
         ProtectHome = "read-only";
         Restart = lib.mkOverride 90 "always";
         RestartMaxDelaySec = lib.mkOverride 90 "1m";
