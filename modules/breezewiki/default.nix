@@ -62,10 +62,26 @@ in
 
   config = mkIf cfg.enable {
     # Create systemd service
+    systemd.tmpfiles.settings = {
+      "10-breezewiki" = {
+        "/opt/breezewiki/bin" = {
+          d = {
+            group = "breezewiki";
+            user = "breezewiki";
+            mode = "0770";
+          };
+        };
+      };
+    };
+
     systemd.services."breezewiki" = {
       enable = true;
       description = "Breezewiki";
       wantedBy = [ "multi-user.target" ];
+      after = [
+        "local-fs.target"
+        "systemd-tmpfiles-setup.service"
+      ];
       environment = {
         BW_BIND_HOST = cfg.config.bind_host;
         BW_PORT = (builtins.toString cfg.config.port);
@@ -77,17 +93,18 @@ in
       };
       serviceConfig = {
         ExecStartPre = [
-          "${pkgs.coreutils}/bin/mkdir $HOME/bin"
-          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki $HOME/bin/breezewiki"
-          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib $HOME/lib"
+          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
+          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
         ];
-        ExecStart = "~/bin/breezewiki";
+        ExecStart = "/opt/breezewiki/bin/breezewiki";
         ProtectHome = "read-only";
         Restart = lib.mkOverride 90 "always";
         RestartMaxDelaySec = lib.mkOverride 90 "1m";
         RestartSec = lib.mkOverride 90 "100ms";
         RestartSteps = lib.mkOverride 90 9;
         Type = "exec";
+        User = "breezewiki";
+        Group = "breezewiki";
         DynamicUser = true;
       };
     };
