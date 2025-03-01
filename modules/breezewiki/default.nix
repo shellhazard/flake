@@ -77,19 +77,19 @@ in
       };
       serviceConfig = {
         ExecStartPre = [
-          "+${pkgs.coreutils}/bin/mkdir -p /opt/breezewiki/bin"
-          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
-          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
+          "${pkgs.coreutils}/bin/mkdir $HOME/bin"
+          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki $HOME/bin/breezewiki"
+          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib $HOME/lib"
         ];
         ExecStart = "/opt/breezewiki/bin/breezewiki";
-        WorkingDirectory = "/opt/breezewiki/bin";
+        WorkingDirectory = "$HOME";
         ProtectHome = "read-only";
         Restart = lib.mkOverride 90 "always";
         RestartMaxDelaySec = lib.mkOverride 90 "1m";
         RestartSec = lib.mkOverride 90 "100ms";
         RestartSteps = lib.mkOverride 90 9;
         Type = "exec";
-        # DynamicUser = true;
+        DynamicUser = true;
       };
     };
   };
