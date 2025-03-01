@@ -63,9 +63,16 @@ in
   config = mkIf cfg.enable {
     # Create systemd service
     system.activationScripts.breezewikiDir.text = ''
+      # Link binary
       mkdir -p /opt/breezewiki/bin
       ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
-      ln -sf ${cfg.package}/lib/* /opt/breezewiki/lib/*
+
+      # Link libraries
+      mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
+      ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /opt/breezewiki/lib/plt/racketcs-8.7
+
+      # Link static files
+      ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ext
     '';
 
     systemd.services."breezewiki" = {
