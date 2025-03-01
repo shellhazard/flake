@@ -77,7 +77,7 @@ in
       };
       serviceConfig = {
         ExecStartPre = [
-          "+${pkgs.coreutils}/bin/mkdir -p /opt/breezewiki/bin"
+          "+${pkgs.coreutils}/bin/mkdir -p /tmp/breezewiki"
           "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
           "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
         ];
@@ -89,7 +89,7 @@ in
         RestartSec = lib.mkOverride 90 "100ms";
         RestartSteps = lib.mkOverride 90 9;
         Type = "exec";
-        DynamicUser = true;
+        # DynamicUser = true;
       };
     };
   };
