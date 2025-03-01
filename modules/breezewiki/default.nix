@@ -77,9 +77,9 @@ in
       };
       serviceConfig = {
         ExecStartPre = [
-          "mkdir -p /opt/breezewiki/bin"
-          "ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
-          "ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
+          "${pkgs.coreutils}/bin/mkdir -p /opt/breezewiki/bin"
+          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
+          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
         ];
         ExecStart = "/opt/breezewiki/bin/breezewiki";
         WorkingDirectory = "/opt/breezewiki/bin";
