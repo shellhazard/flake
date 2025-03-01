@@ -62,36 +62,17 @@ in
 
   config = mkIf cfg.enable {
     # Create systemd service
-    systemd.tmpfiles.settings = {
-      "10-breezewiki" = {
-        "/opt/breezewiki/bin".d = {
-          group = "breezewiki";
-          user = "breezewiki";
-          mode = "0770";
-        };
-        "/opt/breezewiki/bin/breezewiki".ln = {
-          argument = "${cfg.package}/bin/breezewiki";
-          group = "breezewiki";
-          user = "breezewiki";
-          mode = "0770";
-        };
-        "/opt/breezewiki/lib".ln = {
-          argument = "${cfg.package}/lib";
-          group = "breezewiki";
-          user = "breezewiki";
-          mode = "0770";
-        };
-      };
-    };
+    system.activationScripts.breezewikiDir.text = ''
+      mkdir -p /opt/breezewiki/bin
+      ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
+      ln -sf ${cfg.package}/lib /opt/breezewiki/lib
+    '';
 
     systemd.services."breezewiki" = {
       enable = true;
       description = "Breezewiki";
       wantedBy = [ "multi-user.target" ];
-      requires = [
-        "local-fs.target"
-        "systemd-tmpfiles-setup.service"
-      ];
+      after = [ "local-fs.target" ];
       environment = {
         BW_BIND_HOST = cfg.config.bind_host;
         BW_PORT = (builtins.toString cfg.config.port);
