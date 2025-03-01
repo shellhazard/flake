@@ -81,7 +81,7 @@ in
           "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki $HOME/bin/breezewiki"
           "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib $HOME/lib"
         ];
-        ExecStart = "$HOME/bin/breezewiki";
+        ExecStart = "~/bin/breezewiki";
         ProtectHome = "read-only";
         Restart = lib.mkOverride 90 "always";
         RestartMaxDelaySec = lib.mkOverride 90 "1m";
