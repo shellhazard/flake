@@ -12,10 +12,6 @@ in
   options = {
     services.breezewiki = {
       enable = mkEnableOption "breezewiki";
-      storagePath = mkOption {
-        type = types.path;
-
-      };
       config = mkOption {
         type = types.submodule {
           options = {
@@ -80,7 +76,11 @@ in
         BW_STRICT_PROXY = (builtins.toString cfg.config.strict_proxy);
       };
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/breezewiki";
+        ExecStartPre = [
+          "ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
+          "ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
+        ];
+        ExecStart = "/opt/breezewiki/bin/breezewiki";
         WorkingDirectory = "/opt/breezewiki/bin";
         ProtectHome = "read-only";
         Restart = lib.mkOverride 90 "always";
