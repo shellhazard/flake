@@ -77,7 +77,7 @@ in
       };
       serviceConfig = {
         ExecStartPre = [
-          "${pkgs.util-linux}/bin/mkdir -p /opt/breezewiki/bin"
+          "/run/current-system/sw/bin/mkdir -p /opt/breezewiki/bin"
           "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
           "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
         ];
