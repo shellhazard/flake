@@ -64,12 +64,22 @@ in
     # Create systemd service
     systemd.tmpfiles.settings = {
       "10-breezewiki" = {
-        "/opt/breezewiki/bin" = {
-          d = {
-            group = "breezewiki";
-            user = "breezewiki";
-            mode = "0770";
-          };
+        "/opt/breezewiki/bin".d = {
+          group = "breezewiki";
+          user = "breezewiki";
+          mode = "0770";
+        };
+        "/opt/breezewiki/bin/breezewiki".ln = {
+          argument = "${cfg.package}/bin/breezewiki";
+          group = "breezewiki";
+          user = "breezewiki";
+          mode = "0770";
+        };
+        "/opt/breezewiki/lib".ln = {
+          argument = "${cfg.package}/lib";
+          group = "breezewiki";
+          user = "breezewiki";
+          mode = "0770";
         };
       };
     };
@@ -78,7 +88,7 @@ in
       enable = true;
       description = "Breezewiki";
       wantedBy = [ "multi-user.target" ];
-      after = [
+      requires = [
         "local-fs.target"
         "systemd-tmpfiles-setup.service"
       ];
@@ -92,10 +102,6 @@ in
         BW_STRICT_PROXY = (builtins.toString cfg.config.strict_proxy);
       };
       serviceConfig = {
-        ExecStartPre = [
-          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki"
-          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/lib /opt/breezewiki/lib"
-        ];
         ExecStart = "/opt/breezewiki/bin/breezewiki";
         ProtectHome = "read-only";
         Restart = lib.mkOverride 90 "always";
