@@ -73,7 +73,7 @@ in
 
       # Link static files
       mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
-      ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ext
+      ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ert
     '';
 
     systemd.services."breezewiki" = {
