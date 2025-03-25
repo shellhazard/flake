@@ -107,7 +107,7 @@ in
 
           # Create appropriate symlinks
           mkdir -p /var/tmp/breezewiki/bin
-          ln -sf ${cfg.package}/bin/breezewiki /var/tmp/breezewiki/breezewiki
+          ln -sf ${cfg.package}/bin/breezewiki /var/tmp/breezewiki/bin/breezewiki
 
           mkdir -p /var/tmp/breezewiki/lib/plt
           ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /var/tmp/breezewiki/lib/plt/racketcs-8.7
@@ -116,10 +116,9 @@ in
           ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /var/tmp/breezewiki/lib/plt/dist/exts/ert
 
           # Run Breezewiki
-          /var/tmp/breezewiki/breezewiki
+          /var/tmp/breezewiki/bin/breezewiki
         ''}";
         ProtectHome = "read-only";
-        PrivateTmp = true;
         Restart = lib.mkOverride 90 "always";
         RestartMaxDelaySec = lib.mkOverride 90 "1m";
         RestartSec = lib.mkOverride 90 "100ms";
