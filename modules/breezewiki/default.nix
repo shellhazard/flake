@@ -62,29 +62,29 @@ in
 
   config = mkIf cfg.enable {
     # Create systemd service
-    system.activationScripts.breezewikiDir.text = ''
-      # Clear it all out.. not sure why we need this but try it
-      rm -rf /opt/breezewiki/bin
+    # system.activationScripts.breezewikiDir.text = ''
+    #   # Clear it all out.. not sure why we need this but try it
+    #   rm -rf /opt/breezewiki/bin
 
-      # Link binary
-      mkdir -p /opt/breezewiki/bin
-      ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
+    #   # Link binary
+    #   mkdir -p /opt/breezewiki/bin
+    #   ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
 
-      # # Link libraries
-      # mkdir -p /opt/breezewiki/lib/plt
-      # ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /opt/breezewiki/lib/plt/racketcs-8.7
+    #   # # Link libraries
+    #   # mkdir -p /opt/breezewiki/lib/plt
+    #   # ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /opt/breezewiki/lib/plt/racketcs-8.7
 
-      # # Link static files
-      # mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
-      # ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ert
+    #   # # Link static files
+    #   # mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
+    #   # ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ert
 
-      # # Apply appropriate permissions
-      # chown -R breezewiki:breezewiki /opt/breezewiki
-      # chown -R breezewiki:breezewiki /opt/breezewiki/*
+    #   # # Apply appropriate permissions
+    #   # chown -R breezewiki:breezewiki /opt/breezewiki
+    #   # chown -R breezewiki:breezewiki /opt/breezewiki/*
 
-      # # Reload the service
-      # systemctl restart breezewiki
-    '';
+    #   # # Reload the service
+    #   # systemctl restart breezewiki
+    # '';
 
     systemd.services."breezewiki" = {
       enable = true;
@@ -101,8 +101,25 @@ in
         BW_STRICT_PROXY = (builtins.toString cfg.config.strict_proxy);
       };
       serviceConfig = {
-        ExecStart = "/opt/breezewiki/bin/breezewiki";
+        # ExecStart = "/opt/breezewiki/bin/breezewiki";
+        ExecStart = "${pkgs.writeShellScript "symlink-breezewiki" ''
+          #!/run/current-system/sw/bin/bash
+
+          # Create appropriate symlinks
+          mkdir -p /var/tmp/breezewiki/bin
+          ln -sf ${cfg.package}/bin/breezewiki /var/tmp/breezewiki/breezewiki
+
+          mkdir -p /var/tmp/breezewiki/lib/plt
+          ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /var/tmp/breezewiki/lib/plt/racketcs-8.7
+
+          mkdir -p /var/tmp/breezewiki/lib/plt/dist/exts/ert
+          ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /var/tmp/breezewiki/lib/plt/dist/exts/ert
+
+          # Run Breezewiki
+          /var/tmp/breezewiki/breezewiki
+        ''}";
         ProtectHome = "read-only";
+        PrivateTmp = true;
         Restart = lib.mkOverride 90 "always";
         RestartMaxDelaySec = lib.mkOverride 90 "1m";
         RestartSec = lib.mkOverride 90 "100ms";
