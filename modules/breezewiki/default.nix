@@ -65,26 +65,25 @@ in
     system.activationScripts.breezewikiDir.text = ''
       # Clear it all out.. not sure why we need this but try it
       rm -rf /opt/breezewiki/bin
-      rm -rf /opt/breezewiki/lib
 
       # Link binary
       mkdir -p /opt/breezewiki/bin
       ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
 
-      # Link libraries
-      mkdir -p /opt/breezewiki/lib/plt
-      ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /opt/breezewiki/lib/plt/racketcs-8.7
+      # # Link libraries
+      # mkdir -p /opt/breezewiki/lib/plt
+      # ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /opt/breezewiki/lib/plt/racketcs-8.7
 
-      # Link static files
-      mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
-      ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ert
+      # # Link static files
+      # mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
+      # ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ert
 
-      # Apply appropriate permissions
-      chown -R breezewiki:breezewiki /opt/breezewiki
-      chown -R breezewiki:breezewiki /opt/breezewiki/*
+      # # Apply appropriate permissions
+      # chown -R breezewiki:breezewiki /opt/breezewiki
+      # chown -R breezewiki:breezewiki /opt/breezewiki/*
 
-      # Reload the service
-      systemctl restart breezewiki
+      # # Reload the service
+      # systemctl restart breezewiki
     '';
 
     systemd.services."breezewiki" = {
