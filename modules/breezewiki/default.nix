@@ -78,6 +78,13 @@ in
       # Link static files
       mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
       ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ert
+
+      # Apply appropriate permissions
+      chown -R breezewiki:breezewiki /opt/breezewiki
+      chown -R breezewiki:breezewiki /opt/breezewiki/*
+
+      # Reload the service
+      systemctl restart breezewiki
     '';
 
     systemd.services."breezewiki" = {
