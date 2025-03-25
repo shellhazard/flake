@@ -63,6 +63,10 @@ in
   config = mkIf cfg.enable {
     # Create systemd service
     system.activationScripts.breezewikiDir.text = ''
+      # Clear it all out.. not sure why we need this but try it
+      rm -rf /opt/breezewiki/bin
+      rm -rf /opt/breezewiki/lib
+
       # Link binary
       mkdir -p /opt/breezewiki/bin
       ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
