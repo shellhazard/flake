@@ -5,6 +5,7 @@
   autoPatchelfHook,
   libz,
   lz4,
+  openssl,
 }:
 
 let
@@ -27,6 +28,7 @@ stdenv.mkDerivation {
   buildInputs = [
     libz
     lz4
+    openssl
   ];
 
   sourceRoot = "./breezewiki-dist";
