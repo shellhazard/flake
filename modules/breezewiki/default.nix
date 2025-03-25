@@ -115,6 +115,9 @@ in
           mkdir -p /var/tmp/breezewiki/lib/plt/dist/exts/ert
           ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /var/tmp/breezewiki/lib/plt/dist/exts/ert
 
+          mkdir -p /var/tmp/breezewiki/storage
+          echo $(ls -la)
+
           # Run Breezewiki
           /var/tmp/breezewiki/bin/breezewiki
         ''}";
