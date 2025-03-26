@@ -36,7 +36,7 @@ Example Flake:
 
 ### Breezewiki
 
-Packaged from the binary distribution [provided here](https://docs.breezewiki.com/Running.html#%28part._.Running_a_compiled_executable%29), mirrored to archive.org. All options are configurable from the service definition. For a full list, [see the docs](https://docs.breezewiki.com/Configuration.html).
+Packaged from the binary distribution [provided here](https://docs.breezewiki.com/Running.html#%28part._.Running_a_compiled_executable%29), mirrored to archive.org. All options are configurable from the service definition. For a full list, [see the docs](https://docs.breezewiki.com/Configuration.html). Packaging from source didn't seem worth it at this stage considering the source repository is offline most of the time.
 
 ```nix
 { ... }:
