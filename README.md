@@ -60,8 +60,10 @@ Packaged from a minimal docker-compose using compose2nix. For the full list of o
   services.nekorooms = {
     enable = true;
     port = 4001;
-    nat1to1 = "127.0.0.1"; # can add your public IP here, otherwise it will be resolved automatically
     instanceURL = "https://party.example.com";
+
+    # can specify public IP here or allow it to be automatically resolved
+    nat1to1 = "127.0.0.1"; 
   };
 }
 ```
