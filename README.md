@@ -4,7 +4,6 @@ Various components that I've hacked together that are certainly useful, but unsu
 
 ## Usage
 
-Example Flake:
 ```nix
 {
   inputs = {
