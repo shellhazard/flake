@@ -95,7 +95,10 @@ in
            # Prepare environment
            export LD_LIBRARY_PATH="${lib.makeLibraryPath (with pkgs; [ openssl ])}:$LD_LIBRARY_PATH"
 
-           # Run Breezewiki
+           # Run Breezewiki. We need to both create a symlink & launch the executable from
+           # here in order to trick it into placing its cache at /var/tmp/breezewiki/storage.
+           #
+           # Otherwise it will try and write to the read-only Nix store.
            cd /var/tmp/breezewiki/bin
           ./breezewiki
         ''}";
