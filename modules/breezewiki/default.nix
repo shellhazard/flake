@@ -103,23 +103,24 @@ in
       serviceConfig = {
         # ExecStart = "/opt/breezewiki/bin/breezewiki";
         ExecStart = "${pkgs.writeShellScript "symlink-breezewiki" ''
-          #!/run/current-system/sw/bin/bash
+           #!/run/current-system/sw/bin/bash
 
-          # Create appropriate symlinks
-          mkdir -p /var/tmp/breezewiki/bin
-          ln -sf ${cfg.package}/bin/breezewiki /var/tmp/breezewiki/bin/breezewiki
+           # Create appropriate symlinks
+           mkdir -p /var/tmp/breezewiki/bin
+           ln -sf ${cfg.package}/bin/breezewiki /var/tmp/breezewiki/bin/breezewiki
 
-          mkdir -p /var/tmp/breezewiki/lib/plt
-          ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /var/tmp/breezewiki/lib/plt/racketcs-8.7
+           mkdir -p /var/tmp/breezewiki/lib/plt
+           ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /var/tmp/breezewiki/lib/plt/racketcs-8.7
 
-          mkdir -p /var/tmp/breezewiki/lib/plt/dist/exts/ert
-          ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /var/tmp/breezewiki/lib/plt/dist/exts/ert
+           mkdir -p /var/tmp/breezewiki/lib/plt/dist/exts/ert
+           ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /var/tmp/breezewiki/lib/plt/dist/exts/ert
 
-          mkdir -p /var/tmp/breezewiki/storage
-          echo "$(ls -la /var/tmp/breezewiki)"
+           mkdir -p /var/tmp/breezewiki/storage
+           echo "$(ls -la /var/tmp/breezewiki)"
 
-          # Run Breezewiki
-          /var/tmp/breezewiki/bin/breezewiki
+           # Run Breezewiki
+           cd /var/tmp/breezewiki/bin
+          ./breezewiki
         ''}";
         ProtectHome = "read-only";
         Restart = lib.mkOverride 90 "always";
