@@ -118,6 +118,9 @@ in
            mkdir -p /var/tmp/breezewiki/storage
            echo "$(ls -la /var/tmp/breezewiki)"
 
+           # Prepare environment
+           export LD_LIBRARY_PATH="${lib.makeLibraryPath (with pkgs; [ openssl ])}:$LD_LIBRARY_PATH"
+
            # Run Breezewiki
            cd /var/tmp/breezewiki/bin
           ./breezewiki

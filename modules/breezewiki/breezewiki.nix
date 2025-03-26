@@ -23,12 +23,12 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     autoPatchelfHook
+    openssl
   ];
 
   buildInputs = [
     libz
     lz4
-    openssl
   ];
 
   sourceRoot = "./breezewiki-dist";
