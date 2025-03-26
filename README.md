@@ -9,7 +9,7 @@ Example Flake:
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    sh-flake.url = "git+ssh://git@github.com/shellhazard/flake.git?ref=main";
+    sh-flake.url = "github:shellhazard/flake";
   };
 
   outputs =
