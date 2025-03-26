@@ -54,6 +54,8 @@ Packaged from the binary distribution [provided here](https://docs.breezewiki.co
 
 Packaged from a minimal docker-compose using compose2nix. For the full list of options, see [the module definition](https://github.com/shellhazard/nix/blob/main/modules/neko-rooms/default.nix). Note that at this stage the module assumes the use of Docker, not Podman.
 
+Shouldn't be too much effort to avoid running the main service in Docker but since it depends on it being present anyway I've gone for the strategic approach of "getting it working".
+
 ```nix
 { ... }:
 {
