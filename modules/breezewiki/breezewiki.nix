@@ -5,7 +5,6 @@
   autoPatchelfHook,
   libz,
   lz4,
-  openssl,
 }:
 
 let
@@ -23,7 +22,6 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     autoPatchelfHook
-    openssl
   ];
 
   buildInputs = [
@@ -47,24 +45,3 @@ stdenv.mkDerivation {
     platforms = platforms.linux;
   };
 }
-# in
-
-# buildFHSEnv {
-#   name = pname;
-
-#   targetPkgs = pkgs: [
-#     breezewiki
-#   ];
-
-#   runScript = "./bin/breezewiki";
-#   extraInstallCommands = ''
-#     touch $out/test
-#   '';
-
-#   meta = with lib; {
-#     homepage = "https://breezewiki.com/";
-#     license = licenses.mit;
-#     description = "Fandom wiki proxy.";
-#     platforms = platforms.linux;
-#   };
-# }

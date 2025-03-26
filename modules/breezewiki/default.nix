@@ -61,31 +61,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    # Create systemd service
-    # system.activationScripts.breezewikiDir.text = ''
-    #   # Clear it all out.. not sure why we need this but try it
-    #   rm -rf /opt/breezewiki/bin
-
-    #   # Link binary
-    #   mkdir -p /opt/breezewiki/bin
-    #   ln -sf ${cfg.package}/bin/breezewiki /opt/breezewiki/bin/breezewiki
-
-    #   # # Link libraries
-    #   # mkdir -p /opt/breezewiki/lib/plt
-    #   # ln -sf ${cfg.package}/lib/plt/racketcs-8.7 /opt/breezewiki/lib/plt/racketcs-8.7
-
-    #   # # Link static files
-    #   # mkdir -p /opt/breezewiki/lib/plt/dist/exts/ert
-    #   # ln -sf ${cfg.package}/lib/plt/dist/exts/ert/* /opt/breezewiki/lib/plt/dist/exts/ert
-
-    #   # # Apply appropriate permissions
-    #   # chown -R breezewiki:breezewiki /opt/breezewiki
-    #   # chown -R breezewiki:breezewiki /opt/breezewiki/*
-
-    #   # # Reload the service
-    #   # systemctl restart breezewiki
-    # '';
-
     systemd.services."breezewiki" = {
       enable = true;
       description = "Breezewiki";
@@ -101,8 +76,7 @@ in
         BW_STRICT_PROXY = (builtins.toString cfg.config.strict_proxy);
       };
       serviceConfig = {
-        # ExecStart = "/opt/breezewiki/bin/breezewiki";
-        ExecStart = "${pkgs.writeShellScript "symlink-breezewiki" ''
+        ExecStart = "${pkgs.writeShellScript "breezewiki-sym" ''
            #!/run/current-system/sw/bin/bash
 
            # Create appropriate symlinks
@@ -131,8 +105,6 @@ in
         RestartSec = lib.mkOverride 90 "100ms";
         RestartSteps = lib.mkOverride 90 9;
         Type = "exec";
-        User = "breezewiki";
-        Group = "breezewiki";
         DynamicUser = true;
       };
     };
