@@ -24,7 +24,7 @@ Example Flake:
           system = "x86_64-linux";
 
           modules = [
-          	./configuration.nix
+            ./configuration.nix
             shellhazard-nix.nixosModules.breezewiki
             shellhazard-nix.nixosModules.neko-rooms
           ];
