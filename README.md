@@ -9,14 +9,14 @@ Example Flake:
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    shellhazard-nix.url = "git+ssh://git@github.com/shellhazard/nix.git?ref=main";
+    sh-flake.url = "git+ssh://git@github.com/shellhazard/flake.git?ref=main";
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
-      shellhazard-nix,
+      sh-flake,
     }:
     {
       nixosConfigurations = {
@@ -25,8 +25,8 @@ Example Flake:
 
           modules = [
             ./configuration.nix
-            shellhazard-nix.nixosModules.breezewiki
-            shellhazard-nix.nixosModules.neko-rooms
+            sh-flake.nixosModules.breezewiki
+            sh-flake.nixosModules.neko-rooms
           ];
         };
       };
