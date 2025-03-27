@@ -4,7 +4,7 @@
   outputs =
     { ... }:
     {
-      nixosModules.breezewiki = import ./modules/breezewiki;
-      nixosModules.neko-rooms = import ./modules/neko-rooms;
+      nixosModules.breezewiki = import ./modules/bin/breezewiki;
+      nixosModules.neko-rooms = import ./modules/docker/neko-rooms;
     };
 }
